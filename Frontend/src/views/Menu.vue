@@ -38,7 +38,7 @@
                 <!-- TODO: Maybe add way to addToCart somehow -->
                 <v-card :to="`product/${product.id}`">
                   <v-img
-                    :src="'/images/menu.jpg'"
+                    :src="product.img"
                     class="white--text align-end fill-height"
                   >
                     <v-card-title class="product-name py-0">{{
@@ -72,9 +72,7 @@ export default {
     ...mapState(["products", "categories", "selectedCategory"]),
   },
 
-  methods: {
-    ...mapActions(["setSelectedCategory", "addToCart", "getResource"]),
-  },
+  methods: mapActions(["setSelectedCategory", "addToCart", "getResource"]),
 
   created() {
     this.getResource({ resource: "products", mutationName: "SET_PRODUCTS" });

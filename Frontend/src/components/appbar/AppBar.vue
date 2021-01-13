@@ -4,7 +4,7 @@
       >Mesen Burgeri</v-toolbar-title
     >
 
-    <v-tabs>
+    <v-tabs optional>
       <v-tab :to="link.to" exact v-for="link in links" :key="link.to">
         <v-icon>{{ link.icon }}</v-icon>
         <span class="ml-2">{{ link.title }}</span>
