@@ -62,6 +62,8 @@ class ProductController extends Controller
     /**
      * Edit a product
      *
+     * @param  Request  $request
+     * @param  int      $id
      * @return Response
      */
     public function editProduct(Request $request, $id) 

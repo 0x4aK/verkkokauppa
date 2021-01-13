@@ -56,6 +56,9 @@
                     item-text="title"
                     item-value="id"
                     v-model="selectedProduct.category"
+                    :prepend-icon="
+                      this.categories[selectedProduct.category].icon
+                    "
                   />
                 </v-card-text>
               </div>
@@ -99,7 +102,7 @@
       <v-col cols="12" md="6" lg="8">
         <v-card>
           <v-container>
-            <v-row>
+            <v-row dense>
               <v-col cols="6" lg="3">
                 <v-card @click="makeEmptyProduct">
                   <v-img
@@ -124,7 +127,7 @@
               >
                 <v-card @click="selectedProduct = { ...product }">
                   <v-img
-                    :src="product.img || '/images/default.jpg'"
+                    :src="product.img"
                     class="white--text align-end fill-height"
                   >
                     <v-card-title class="product-name py-0">
