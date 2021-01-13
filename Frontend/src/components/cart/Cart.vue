@@ -1,30 +1,32 @@
 <template>
   <div :class="['cart ma-2 ma-lg-4', { mobile: $vuetify.breakpoint.mobile }]">
-    <v-expansion-panels accordion popout>
-      <v-expansion-panel>
-        <v-expansion-panel-header :class="{ flash: isFlashing }">
-          <div>
-            <v-icon>mdi-cart</v-icon>
-            Cart
-          </div>
-          <div class="text-caption success--text">{{ totalPrice }}€</div>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content v-for="(details, id) in cart" :key="id">
-          <div class="d-flex align-center">
-            <div class="text-caption">
-              {{ details.name }} x
-              <span class="text-subtitle-2">{{ details.quantity }}</span>
+    <div style="position: absolute">
+      <v-expansion-panels accordion popout>
+        <v-expansion-panel>
+          <v-expansion-panel-header :class="{ flash: isFlashing }">
+            <div>
+              <v-icon>mdi-cart</v-icon>
+              Cart
             </div>
-            <div class="ml-auto mr-1 text-body-2 success--text">
-              {{ (details.quantity * details.price).toFixed(2) }}€
+            <div class="text-caption success--text">{{ totalPrice }}€</div>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content v-for="(details, id) in cart" :key="id">
+            <div class="d-flex align-center">
+              <div class="text-caption">
+                {{ details.name }} x
+                <span class="text-subtitle-2">{{ details.quantity }}</span>
+              </div>
+              <div class="ml-auto mr-1 text-body-2 success--text">
+                {{ (details.quantity * details.price).toFixed(2) }}€
+              </div>
+              <v-btn icon color="error" @click="removeFromCart(id)">
+                <v-icon>mdi-minus</v-icon>
+              </v-btn>
             </div>
-            <v-btn icon color="error" @click="removeFromCart(id)">
-              <v-icon>mdi-minus</v-icon>
-            </v-btn>
-          </div>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </div>
   </div>
 </template>
 
@@ -69,15 +71,22 @@ export default {
   position: sticky;
   z-index: 10;
   bottom: 16px;
-  width: 300px;
 
   &.mobile {
     position: fixed;
-    top: 0;
-    right: 0;
+    top: 16px;
     bottom: auto;
+    right: 300px;
 
-    min-width: 250px;
+    & > div {
+      top: 0;
+      bottom: auto;
+    }
+  }
+
+  & > div {
+    width: 300px;
+    bottom: 0;
   }
 }
 
