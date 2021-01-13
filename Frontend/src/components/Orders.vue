@@ -13,14 +13,14 @@
       <v-virtual-scroll
         :items="orders"
         :height="getHeight"
-        item-height="64"
+        item-height="70"
         v-if="orders"
       >
         <template v-slot:default="{ item }">
           <v-list-item
             :key="item.id"
             @click="$emit('orderClicked', item)"
-            style="height: 63px"
+            style="height: 69px"
             class="px-0"
           >
             <v-tooltip bottom>
@@ -43,10 +43,14 @@
                 Tilaus #{{ item.id }}
               </div>
               <div class="text-caption text-truncate">
+                <v-icon small>mdi-hamburger</v-icon>
                 {{ joinProducts(item.ordered) }}
               </div>
               <div class="text-caption d-flex justify-space-between">
-                <div>{{ item.store.name }}</div>
+                <div>
+                  <v-icon small>mdi-store</v-icon>
+                  {{ item.store.name }}
+                </div>
                 <div class="text--disabled">
                   {{ sinceLastUpdate(item.updated_at) }}
                 </div>
@@ -67,7 +71,7 @@ import { mapState } from "vuex";
 export default {
   mixins: [httpClient],
 
-  props: ["owner"],
+  props: ["type"],
 
   data: () => ({
     orders: null,
@@ -75,17 +79,17 @@ export default {
 
   computed: {
     getHeight() {
-      const maxOrders = this.owner !== undefined ? 8 : 5;
+      const maxOrders = this.type !== undefined ? 8 : 5;
       const multiplier =
         this.orders.length >= maxOrders ? maxOrders : this.orders.length;
-      return multiplier * 64;
+      return multiplier * 70;
     },
     ...mapState(["status"]),
   },
 
   methods: {
     getOrders() {
-      this.http(`api/${this.owner !== undefined ? "owner" : "profile"}/orders`)
+      this.http(`api/${this.type !== undefined ? this.type : "profile"}/orders`)
         .then((data) => (this.orders = data.data))
         .catch(() => {
           this.orders = [];

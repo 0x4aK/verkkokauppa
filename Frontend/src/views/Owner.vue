@@ -8,17 +8,36 @@
             <div class="text-h5 d-flex justify-space-between mb-1">
               Tilaus #{{ loadedOrder.id }}
               <div>
-                <v-btn
-                  icon
-                  color="grey darken-1"
-                  @click="setStatus(loadedOrder.id, 0)"
-                  :disabled="loadedOrder.status <= 1"
-                >
-                  <v-icon>mdi-undo</v-icon>
-                </v-btn>
-                <v-btn icon color="error" @click="loadedOrder = null">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                      color="info"
+                      @click="setStatus(loadedOrder.id, 0)"
+                      :disabled="loadedOrder.status <= 1"
+                    >
+                      <v-icon>mdi-undo</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Peruuta</span>
+                </v-tooltip>
+
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                      color="error"
+                      @click="loadedOrder = null"
+                    >
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Lopeta hallinta</span>
+                </v-tooltip>
               </div>
             </div>
 
@@ -148,7 +167,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" sm="8" md="6" lg="4">
-        <Orders ref="OrderCard" owner @orderClicked="loadOrder" />
+        <Orders ref="OrderCard" type="owner" @orderClicked="loadOrder" />
       </v-col>
     </v-row>
   </v-container>
@@ -157,7 +176,7 @@
 <script>
 import httpClient from "@/mixins/httpClient";
 
-import Orders from "@/components/profile/Orders";
+import Orders from "@/components/Orders";
 
 import { mapActions, mapGetters, mapState } from "vuex";
 

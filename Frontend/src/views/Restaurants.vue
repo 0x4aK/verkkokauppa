@@ -18,9 +18,19 @@
       </v-text-field>
     </v-row>
     <v-divider />
-    <v-row class="justify-center justify-md-start" v-if="storesFiltered.length">
+    <v-row v-if="!storesWithOpenHours.length" justify="center">
+      <div class="text-h5 text--disabled my-16">
+        Haemme kauppoja
+        <v-icon>mdi-magnify</v-icon>
+      </div>
+    </v-row>
+    <v-row
+      v-else-if="storesFiltered.length"
+      class="justify-center justify-md-start"
+    >
       <v-col
-        cols="10"
+        cols="11"
+        sm="8"
         md="6"
         lg="4"
         v-for="store in storesFiltered"
@@ -29,7 +39,7 @@
         <Store :store="store" />
       </v-col>
     </v-row>
-    <v-row justify="center" v-else>
+    <v-row v-else justify="center">
       <div class="text-h5 text--disabled my-16">
         Emme löytäneet sopivaa kauppaa
         <v-icon>mdi-emoticon-confused-outline</v-icon>

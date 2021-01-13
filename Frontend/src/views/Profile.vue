@@ -31,7 +31,7 @@
 <script>
 import Store from "@/components/Store";
 import Info from "@/components/profile/Info";
-import Orders from "@/components/profile/Orders";
+import Orders from "@/components/Orders";
 
 import { mapActions, mapGetters, mapState } from "vuex";
 
