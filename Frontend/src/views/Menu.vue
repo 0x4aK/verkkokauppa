@@ -1,5 +1,5 @@
 <template>
-  <v-container class="menu mt-16 mt-md-0">
+  <v-container class="menu mt-lg-0 mt-16 mb-lg-8">
     <v-row>
       <v-col cols="12" sm="4" md="3">
         <v-card elevation="5">

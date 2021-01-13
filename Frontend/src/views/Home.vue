@@ -1,5 +1,5 @@
 <template>
-  <v-container class="home mt-16 mt-md-0">
+  <v-container class="home mt-lg-0 mt-16 mb-lg-8">
     <Carousel />
     <Post />
   </v-container>
