@@ -62,6 +62,13 @@ const routes = [
       import(/* webpackChunkName: "owner" */ "../views/Owner.vue"),
     meta: { requiresAuth: true, lvlNeeded: 1 },
   },
+
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () =>
+      import(/* webpackChunkName: "not-found" */ "../views/NotFound.vue"),
+  },
 ];
 
 const router = new VueRouter({
