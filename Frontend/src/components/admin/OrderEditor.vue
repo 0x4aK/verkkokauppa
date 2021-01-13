@@ -67,7 +67,7 @@ export default {
     },
     statusItems() {
       return Object.entries(this.status).map(([key, value]) =>
-        Object.assign(value, { id: Number(key) })
+        Object.assign({ ...value }, { id: Number(key) })
       );
     },
     ...mapState(["status"]),
