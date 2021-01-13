@@ -38,7 +38,7 @@
                 <!-- TODO: Maybe add way to addToCart somehow -->
                 <v-card :to="`product/${product.id}`">
                   <v-img
-                    :src="product.img"
+                    :src="product.img || '/images/default.jpg'"
                     class="white--text align-end fill-height"
                   >
                     <v-card-title class="product-name py-0">{{

@@ -26,7 +26,8 @@
             </v-card-title>
 
             <v-expand-transition>
-              <v-card-text v-if="selectedProduct">
+              <div v-if="selectedProduct">
+                <!-- TODO: https://vuetifyjs.com/en/components/file-inputs/#validation -->
                 <v-img height="230" :src="selectedProduct.img"></v-img>
 
                 <v-card-text>
@@ -57,7 +58,7 @@
                     v-model="selectedProduct.category"
                   />
                 </v-card-text>
-              </v-card-text>
+              </div>
             </v-expand-transition>
 
             <v-row class="pa-4 justify-space-around" dense>
@@ -123,11 +124,18 @@
               >
                 <v-card @click="selectedProduct = { ...product }">
                   <v-img
-                    :src="product.img"
+                    :src="product.img || '/images/default.jpg'"
                     class="white--text align-end fill-height"
                   >
                     <v-card-title class="product-name py-0">
                       {{ product.name }}
+                      <v-icon
+                        class="featured-star"
+                        color="success"
+                        v-if="product.is_featured"
+                      >
+                        mdi-star
+                      </v-icon>
                     </v-card-title>
                   </v-img>
                 </v-card>
@@ -215,4 +223,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.featured-star {
+  position: absolute !important;
+  top: 6px;
+  right: 6px;
+}
+</style>
