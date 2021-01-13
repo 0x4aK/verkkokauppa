@@ -23,6 +23,18 @@ class UsersTableSeeder extends Seeder
 
         $admin->save();
 
+        $owner = new App\User;
+        $owner->fname = 'owner';
+        $owner->lname = '';
+        $owner->email = 'b@a.com';
+        $owner->password = password_hash('asdasdasd', PASSWORD_BCRYPT);
+        $owner->address = '';
+        $owner->phone = '';
+        $owner->role = 1;
+        $owner->store = 1;
+
+        $owner->save();
+
         // create 10 users using the user factory
         factory(App\User::class, 10)->create();
     }
