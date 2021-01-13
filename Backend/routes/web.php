@@ -51,6 +51,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('orders', 'OrderController@getOrders');         // /api/admin/orders
         $router->delete('orders/{id}', 'OrderController@deleteOrder');
         $router->patch('orders/{id}', 'OrderController@editOrderStatusAdmin');
+
+        $router->delete('products/{id}', 'ProductController@deleteProduct');
     });
 });
 

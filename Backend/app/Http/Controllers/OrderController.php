@@ -124,6 +124,7 @@ class OrderController extends Controller
      * Deletes an order from database.
      *
      * @param  Request  $request
+     * @param  int      $id
      * @return Response
      */
     public function deleteOrder(Request $request, $id)

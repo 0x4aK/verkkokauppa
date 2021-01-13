@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Product;
 
 class ProductController extends Controller
@@ -55,5 +57,24 @@ class ProductController extends Controller
         }
 
         return response()->json(['data' => $product], 200);
+    }
+
+    /**
+     * Deletes a product from database.
+     *
+     * @param  Request  $request
+     * @param  int      $id
+     * @return Response
+     */
+    public function deleteProduct(Request $request, $id)
+    {
+        try {
+            $product = Product::findOrFail($id);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Tuotetta ei löydetty!'], 404);
+        }
+
+        $product->delete();
+        return response()->json(['message' => "Tuote poistettu!"], 200);
     }
 }
