@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function getProducts() 
     {
         return response()->json([
-            'data' => Product::all()
+            'data' => Product::orderBy('category')->get()
         ], 200);
     }
 
@@ -58,6 +58,47 @@ class ProductController extends Controller
 
         return response()->json(['data' => $product], 200);
     }
+
+    /**
+     * Edit a product
+     *
+     * @return Response
+     */
+    public function editProduct(Request $request, $id) 
+    {
+
+        $this->validate($request, [
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'is_featured' => 'required|boolean',
+            'description' => 'required|string',
+            'category' => 'required|integer|min:1'
+        ]);
+
+        if (!$id) $product = new Product;
+        else {
+            try {
+                $product = Product::findOrFail($id);
+            } catch (\Exception $e) {
+                return response()->json(['message' => 'Tuotetta ei löydetty!'], 404);
+            }
+        }
+
+        $product->name = $request->input('name');
+        $product->price = (float)$request->input('price');
+        $product->is_featured = (bool)$request->input('is_featured');
+        $product->description = $request->input('description');
+        $product->category = (int)$request->input('category');
+
+        if (!$id) $product->save();
+        else $product->update();
+
+        $message = !$id ? 'Tuote lisättiin onnistuneesti' : 'Tuote päivitettiin';
+
+        return response()->json(['message' => $message, 'data' => $product], 200);
+    }
+
+
 
     /**
      * Deletes a product from database.
