@@ -71,7 +71,7 @@ import { mapState } from "vuex";
 export default {
   mixins: [httpClient],
 
-  props: ["type"],
+  props: ["type", "amount"],
 
   data: () => ({
     orders: null,
@@ -79,7 +79,7 @@ export default {
 
   computed: {
     getHeight() {
-      const maxOrders = this.type !== undefined ? 8 : 5;
+      const maxOrders = this.amount || 5;
       const multiplier =
         this.orders.length >= maxOrders ? maxOrders : this.orders.length;
       return multiplier * 70;

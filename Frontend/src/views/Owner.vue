@@ -167,7 +167,12 @@
         </v-card>
       </v-col>
       <v-col cols="12" sm="8" md="6" lg="4">
-        <Orders ref="OrderCard" type="owner" @orderClicked="loadOrder" />
+        <Orders
+          ref="OrderCard"
+          type="owner"
+          amount="8"
+          @orderClicked="loadOrder"
+        />
       </v-col>
     </v-row>
   </v-container>
