@@ -60,8 +60,11 @@ const actions = {
   showMessage({ commit }, { message, color }) {
     commit("SET_MESSAGE", { message, color });
   },
-  async getResource({ commit, state }, { resource, mutationName }) {
-    if (state[resource].length) return;
+  async getResource(
+    { commit, state },
+    { resource, mutationName, forced = false }
+  ) {
+    if (state[resource].length && !forced) return;
 
     console.debug(`Getting ${resource}`);
 
