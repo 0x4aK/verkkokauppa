@@ -21,10 +21,11 @@ class OrderController extends Controller
 
     /**
      * Get orders for the store that the user is logged in on
+     * Only return orders that have status between 1-3
      * 
      * @return Response
      */
-    public function getOrders()
+    public function getOrdersFiltered()
     {
         $user = Auth::user();
         $orders = Order::where('store_id', $user->store)->orderBy('status')->get();
@@ -41,9 +42,9 @@ class OrderController extends Controller
      * 
      * @return Response
      */
-    public function getAllOrders()
+    public function getOrders()
     {
-        $orders = Order::orderBy('status')->get();
+        $orders = Order::orderBy('status')->orderBy('id')->get();
         $loaded = $orders->load('user', 'store', 'ordered')->values();
 
         return response()->json(['data' => $loaded], 200);
@@ -58,7 +59,7 @@ class OrderController extends Controller
         try {
             $order = Order::with(['user', 'ordered', 'store'])->findOrFail($id);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Order not found!'], 404);
+            return response()->json(['message' => 'Tilausta ei löydetty!'], 404);
         }
 
         return response()->json(['data' => $order], 200);

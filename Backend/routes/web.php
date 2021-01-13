@@ -38,7 +38,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     // Owner routes
     $router->group(['prefix' => 'owner', 'middleware' => ['auth', 'role:1']], function () use ($router) {
-        $router->get('orders', 'OrderController@getOrders');                // /api/owner/orders
+        $router->get('orders', 'OrderController@getOrdersFiltered');        // /api/owner/orders
         $router->get('orders/{id}', 'OrderController@getOrderById');        // /api/owner/orders/{id}
         $router->patch('orders/{id}', 'OrderController@editOrderStatus');   // /api/owner/orders
     });
@@ -48,7 +48,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('users/all', 'UserController@getAllUsers');    // /api/admin/users/all
         $router->get('users/{id}', 'UserController@getUserById');   // /api/admin/users/{id}
 
-        $router->get('orders', 'OrderController@getAllOrders');         // /api/admin/orders
+        $router->get('orders', 'OrderController@getOrders');         // /api/admin/orders
         $router->delete('orders/{id}', 'OrderController@deleteOrder');
         $router->patch('orders/{id}', 'OrderController@editOrderStatusAdmin');
     });
