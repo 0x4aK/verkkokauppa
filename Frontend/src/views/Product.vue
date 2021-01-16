@@ -1,13 +1,13 @@
 <template>
   <v-container class="product mt-lg-0 mt-16 mb-lg-8">
     <v-row justify="center">
-      <v-col cols="10" md="6">
+      <v-col cols="12" md="6">
         <v-card>
           <v-img :src="product.img"></v-img>
         </v-card>
       </v-col>
 
-      <v-col cols="10" md="6">
+      <v-col cols="12" md="6">
         <v-container class="pa-0">
           <v-row no-gutters>
             <v-col cols="12">

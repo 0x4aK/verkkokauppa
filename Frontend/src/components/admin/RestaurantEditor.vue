@@ -11,7 +11,16 @@
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+
+export default {
+  methods: {
+    ...mapActions(["getResource", "showMessage"]),
+  },
+  created() {
+    this.getResource({ resource: "products", mutationName: "SET_PRODUCTS" });
+  },
+};
 </script>
 
 <style></style>

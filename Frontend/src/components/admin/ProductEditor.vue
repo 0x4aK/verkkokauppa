@@ -104,7 +104,7 @@
           <v-container>
             <v-row dense>
               <v-col cols="6" lg="3">
-                <v-card @click="makeEmptyProduct">
+                <v-card @click="makeEmptyProduct" height="164">
                   <v-img
                     src="/images/menu.jpg"
                     class="white--text align-center fill-height"
@@ -125,7 +125,7 @@
                 v-for="product in products"
                 :key="product.id"
               >
-                <v-card @click="selectedProduct = { ...product }">
+                <v-card @click="selectedProduct = { ...product }" height="164">
                   <v-img
                     :src="product.img"
                     class="white--text align-end fill-height"

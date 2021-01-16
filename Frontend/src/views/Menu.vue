@@ -26,9 +26,9 @@
         <v-card elevation="5">
           <v-container>
             <div class="text-h4">{{ categories[selectedCategory].title }}</div>
-            <v-divider />
+            <v-divider class="my-2" />
 
-            <v-row>
+            <v-row dense>
               <v-col
                 cols="6"
                 lg="3"
@@ -36,14 +36,14 @@
                 :key="product.id"
               >
                 <!-- TODO: Maybe add way to addToCart somehow -->
-                <v-card :to="`product/${product.id}`">
+                <v-card :to="`product/${product.id}`" height="164">
                   <v-img
                     :src="product.img"
                     class="white--text align-end fill-height"
                   >
-                    <v-card-title class="product-name py-0">{{
-                      product.name
-                    }}</v-card-title>
+                    <v-card-title class="product-name py-0">
+                      {{ product.name }}
+                    </v-card-title>
                   </v-img>
                 </v-card>
               </v-col>
@@ -61,8 +61,7 @@ import { mapActions, mapState } from "vuex";
 export default {
   computed: {
     filteredProducts() {
-      if (!this.selectedCategory)
-        return [...this.products].sort((a, b) => a.category - b.category);
+      if (!this.selectedCategory) return this.products;
 
       return this.products.filter(
         (product) => product.category === this.selectedCategory
