@@ -212,12 +212,7 @@ export default {
         forced: true,
       });
     },
-    ...mapActions([
-      "setSelectedCategory",
-      "addToCart",
-      "getResource",
-      "showMessage",
-    ]),
+    ...mapActions(["getResource", "showMessage"]),
   },
 
   created() {
