@@ -56,7 +56,9 @@ class ProductController extends Controller
             return response()->json(['message' => 'Product not found!'], 404);
         }
 
-        return response()->json(['data' => $product], 200);
+        $related = Product::inRandomOrder()->limit(5)->get();
+
+        return response()->json(['data' => ['product' => $product, 'related' => $related]], 200);
     }
 
     /**
