@@ -34,18 +34,46 @@
                 lg="3"
                 v-for="product in filteredProducts"
                 :key="product.id"
+                class="product-item"
               >
-                <!-- TODO: Maybe add way to addToCart somehow -->
-                <v-card :to="`product/${product.id}`" height="164">
-                  <v-img
-                    :src="product.img"
-                    class="white--text align-end fill-height"
-                  >
-                    <v-card-title class="product-name py-0">
-                      {{ product.name }}
-                    </v-card-title>
-                  </v-img>
-                </v-card>
+                <v-hover v-slot="{ hover }">
+                  <div>
+                    <v-card :to="`product/${product.id}`" height="164">
+                      <v-img
+                        :src="product.img"
+                        class="white--text align-end fill-height"
+                      >
+                        <v-card-title class="product-name py-0">
+                          {{ product.name }}
+                        </v-card-title>
+                        <v-expand-transition>
+                          <div
+                            v-if="hover"
+                            class="product-price d-flex info darken-2 text-h4 white--text"
+                          >
+                            {{ product.price }}€
+                          </div>
+                        </v-expand-transition>
+                      </v-img>
+                    </v-card>
+
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          class="product-cart-add--btn"
+                          icon
+                          color="light-green accent-3"
+                          @click="addToCart(product)"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <v-icon>mdi-plus</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Lisää koriin</span>
+                    </v-tooltip>
+                  </div>
+                </v-hover>
               </v-col>
             </v-row>
           </v-container>
@@ -71,7 +99,10 @@ export default {
     ...mapState(["products", "categories", "selectedCategory"]),
   },
 
-  methods: mapActions(["setSelectedCategory", "addToCart", "getResource"]),
+  methods: {
+    ...mapActions(["setSelectedCategory", "getResource"]),
+    ...mapActions("cart", ["addToCart"]),
+  },
 
   created() {
     this.getResource({ resource: "products", mutationName: "SET_PRODUCTS" });
@@ -79,8 +110,29 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.product-name {
-  background-color: rgba($color: #000000, $alpha: 0.4);
+<style lang="scss">
+.product-item {
+  position: relative;
+
+  & .product-price {
+    align-items: center;
+    top: 0;
+    justify-content: center;
+    opacity: 0.9;
+    position: absolute;
+    width: 100%;
+    height: 33%;
+  }
+
+  & .product-name {
+    height: 52px;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+  }
+  & .product-cart-add--btn {
+    position: absolute;
+    z-index: 2;
+    bottom: 12px;
+    right: 12px;
+  }
 }
 </style>
