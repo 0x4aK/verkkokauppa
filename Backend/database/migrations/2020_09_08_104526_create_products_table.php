@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->decimal('price');
             $table->boolean('is_featured');
-            $table->string('description');
+            $table->text('description');
             $table->integer('category');
             $table->string('img');
         });
