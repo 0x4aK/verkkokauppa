@@ -43,9 +43,11 @@
                         :src="product.img"
                         class="white--text align-end fill-height"
                       >
-                        <v-card-title class="product-name py-0">
+                        <div
+                          class="product-name pa-2 text-h6 d-flex align-center"
+                        >
                           {{ product.name }}
-                        </v-card-title>
+                        </div>
                         <v-expand-transition>
                           <div
                             v-if="hover"
@@ -125,7 +127,6 @@ export default {
   }
 
   & .product-name {
-    height: 52px;
     background-color: rgba($color: #000000, $alpha: 0.4);
   }
   & .product-cart-add--btn {

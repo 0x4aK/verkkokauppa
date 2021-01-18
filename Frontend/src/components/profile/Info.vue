@@ -42,7 +42,9 @@
           <v-autocomplete
             color="info"
             label="Lähin ravintola"
-            :items="storesName"
+            item-text="name"
+            item-value="id"
+            :items="stores"
             v-model="store"
           />
 
@@ -97,9 +99,6 @@ export default {
     store: null,
   }),
   computed: {
-    storesName() {
-      return this.stores.map((store) => store.name);
-    },
     ...mapState("auth", ["user"]),
     ...mapState(["stores"]),
   },
@@ -114,7 +113,7 @@ export default {
           lname: this.lname,
           address: this.address,
           phone: this.phone,
-          store: this.stores.filter((a) => a.name === this.store)[0].id,
+          store: this.store,
         }),
       })
         .then((resp) => {
@@ -130,9 +129,7 @@ export default {
       this.address = user.address;
       this.phone = user.phone;
 
-      this.store = this.stores.filter(
-        (store) => store.id == user.store
-      )[0]?.name;
+      this.store = this.stores.filter((store) => store.id == user.store)[0];
     },
     ...mapActions(["showMessage"]),
     ...mapActions("auth", ["setUser"]),
