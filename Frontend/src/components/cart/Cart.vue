@@ -19,8 +19,16 @@
               <div class="ml-auto mr-1 text-body-2 success--text">
                 {{ (details.quantity * details.price).toFixed(2) }}€
               </div>
-              <v-btn icon color="error" @click="removeFromCart(id)">
+              <v-btn icon color="red" @click="removeFromCart(id)">
                 <v-icon>mdi-minus</v-icon>
+              </v-btn>
+            </div>
+          </v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <div class="d-flex align-center">
+              <v-btn class="ml-auto" text to="/kassa" color="black">
+                Siirry kassalle
+                <v-icon class="ml-1">mdi-arrow-right</v-icon>
               </v-btn>
             </div>
           </v-expansion-panel-content>

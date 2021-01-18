@@ -15,6 +15,7 @@ const state = {
 
   profileLinks: [
     { title: "Profiili", to: "/profile", icon: "mdi-account-details", lvl: 0 },
+    { title: "Kassa", to: "/kassa", icon: "mdi-cart", lvl: 0 },
     { title: "Owner", to: "/owner", icon: "mdi-store", lvl: 1 },
     { title: "Admin", to: "/admin", icon: "mdi-cog", lvl: 2 },
   ],

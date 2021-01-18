@@ -33,9 +33,14 @@ const actions = {
     if (!tempCart[productId].quantity) delete tempCart[productId];
     commit("SET_CART", tempCart);
   },
+  emptyCart({ commit }) {
+    commit("SET_CART", {});
+  },
 };
 
-const getters = {};
+const getters = {
+  getProductIds: (state) => Object.keys(state.cart),
+};
 
 export default {
   namespaced: true,

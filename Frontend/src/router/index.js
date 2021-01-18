@@ -62,6 +62,13 @@ const routes = [
       import(/* webpackChunkName: "owner" */ "../views/Owner.vue"),
     meta: { requiresAuth: true, lvlNeeded: 1 },
   },
+  {
+    path: "/kassa",
+    name: "Checkout",
+    component: () =>
+      import(/* webpackChunkName: "owner" */ "../views/Checkout.vue"),
+    meta: { requiresAuth: true },
+  },
 
   {
     path: "/:catchAll(.*)",

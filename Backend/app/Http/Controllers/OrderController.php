@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Order;
+use App\Store;
+use App\Product;
 
 class OrderController extends Controller
 {
@@ -97,7 +99,6 @@ class OrderController extends Controller
      * Admin version
      * 
      * @param  Request  $request
-     * 
      * @return Response
      */
     public function editOrderStatusAdmin(Request $request, $id) {
@@ -118,6 +119,57 @@ class OrderController extends Controller
         $order->update();
 
         return response()->json(['data' => $order->load('user', 'store', 'ordered')], 200);
+    }
+
+    /**
+     * Create new order
+     * 
+     * @param  Request  $request
+     * @return Response
+     */
+    public function createOrder(Request $request)
+    {
+        $this->validate($request, [
+            'products' => 'required|array',
+            'store' => 'required|integer',
+        ]);
+
+        $user = Auth::user();
+        if (!$user) return response()->json(['message' => 'Et ole kirjautunut!'], 403);
+
+        try {
+            $store = Store::findOrFail($request->input('store'));
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Ravintolaa ei löydetty!'], 404);
+        }
+
+        $order = new Order;
+
+        $order->user()->associate($user);
+        $order->store()->associate($store);
+
+        /**
+         * set status to accepted when credit card goes thru.
+         * we are not doing any actual transactions so we just set it manually
+         */
+        $order->status = 1;
+
+        $order->save();
+
+        $ordered = collect($request->input('products'));
+        $orderedIds = $ordered->pluck('product_id');
+
+        $products = Product::whereIn('id', $orderedIds)->get();
+        
+        $products->each(function  ($product, $key) use ($order, $ordered) {
+            $quantity = $ordered->first(function ($order, $key) use ($product) {
+                 return $order['product_id'] === $product->id;
+            }, ['quantity' => 1])['quantity'];
+
+            $order->ordered()->attach($product, ['quantity' => $quantity]);
+        });
+
+        return response()->json(["message" => "Tilaus onnistui"], 200);
     }
 
     /**

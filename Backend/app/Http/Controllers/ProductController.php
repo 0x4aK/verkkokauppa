@@ -1,5 +1,12 @@
 <?php
 
+/**  
+ *  TODO: Create method that takes in array of product ids
+ *  and return product info in array.
+ *  Maybe use getProducts method (check if id_array in body)
+ * 
+*/
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -42,10 +49,23 @@ class ProductController extends Controller
         ], 200);
     }
 
+    /**
+     * Get all products
+     * 
+     * @param  Request  $request
+     * @return Response
+     */
+    public function getProductsList(Request $request) 
+    {
+        $products = Product::whereIn('id', $request->input())->get();
+
+        return response()->json(['data' => $products], 200);
+    }
 
     /**
      * Get product by the product id
      *
+     * @param  int      $id
      * @return Response
      */
     public function getProductById($id) 
@@ -70,7 +90,6 @@ class ProductController extends Controller
      */
     public function editProduct(Request $request, $id) 
     {
-
         $this->validate($request, [
             'name' => 'required|string',
             'price' => 'required|numeric',
@@ -101,8 +120,6 @@ class ProductController extends Controller
 
         return response()->json(['message' => $message, 'data' => $product], 200);
     }
-
-
 
     /**
      * Deletes a product from database.

@@ -22,18 +22,23 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('', 'UserController@getAuthenticatedUser');                // /api/profile/
         $router->patch('', 'UserController@editAuthenticatedUser');             
         $router->patch('password', 'UserController@editAuthenticatedPassword'); // /api/profile/password
-        $router->delete('', 'UserController@deleteAuthenticatedUser');    // /api/profile/
+        $router->delete('', 'UserController@deleteAuthenticatedUser');          // /api/profile/
         $router->get('orders', 'UserController@getUserOrders');                 // /api/profile/orders
     });
 
     $router->group(['prefix' => 'stores'], function () use ($router) {
-        $router->get('', 'StoreController@getStores');                  // /api/store/
+        $router->get('', 'StoreController@getStores');      // /api/store/
+    });
+
+    $router->group(['prefix' => 'order'], function () use ($router) {
+        $router->post('', 'OrderController@createOrder');    // /api/store/
     });
 
     $router->group(['prefix' => 'products'], function () use ($router) {
         $router->get('', 'ProductController@getProducts');                  // /api/products/
         $router->get('featured', 'ProductController@getFeaturedProducts');  // /api/products/featured
         $router->get('{id}', 'ProductController@getProductById');           // /api/products/{id}
+        $router->post('list', 'ProductController@getProductsList');         // /api/products/list
     });
 
     // Owner routes

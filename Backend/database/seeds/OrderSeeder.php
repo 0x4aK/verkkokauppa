@@ -11,11 +11,15 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        $users = App\User::where('role', 0);
+        $orders = factory(App\Order::class, 25)->create();
 
-        $users->each(function ($user) {
-            $order = factory(App\Order::class, rand(0,3))->create();
-            $user->orders()->saveMany($order);
+        $users = App\User::all();
+        $stores = App\Store::all();
+
+        $orders->each(function ($order) use ($users, $stores){
+            $order->user()->associate($users->random());
+            $order->store()->associate($stores->random());
+            $order->update();
         });
     }
 }

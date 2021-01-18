@@ -15,10 +15,13 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('store_id');
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('store_id')->unsigned()->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
         });
     }
 

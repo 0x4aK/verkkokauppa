@@ -44,5 +44,7 @@ $factory->define(App\Store::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Order::class, function (Faker\Generator $faker) {
-    return [];
+    return [
+        'status' => rand(1,4)
+    ];
 });
