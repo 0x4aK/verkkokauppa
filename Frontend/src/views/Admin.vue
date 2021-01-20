@@ -1,5 +1,5 @@
 <template>
-  <v-container class="admin" fluid>
+  <v-container class="admin">
     <v-row class="px-3">
       <v-tabs grow v-model="tab">
         <v-tab>Hallinta panelit</v-tab>
@@ -11,7 +11,7 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <v-container>
+        <v-container fluid>
           <v-row class="justify-center justify-md-start">
             <v-col cols="12" sm="10" md="6" lg="4">
               <OrderEditor />

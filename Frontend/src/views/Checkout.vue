@@ -170,7 +170,7 @@ export default {
     },
 
     setInfo(user = this.user) {
-      this.store = this.stores.filter((store) => store.id == user.store)[0]?.id;
+      this.store = this.stores.find((store) => store.id == user.store)?.id;
     },
 
     submitOrder() {

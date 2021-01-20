@@ -197,9 +197,9 @@ export default {
 
   computed: {
     storeOwner() {
-      return this.storesWithOpenHours.filter(
+      return this.storesWithOpenHours.find(
         (store) => store.id === this.user.store
-      )[0];
+      );
     },
     ...mapState(["status"]),
     ...mapState("auth", ["user"]),
