@@ -58,7 +58,7 @@ import { mapActions } from "vuex";
 
 import httpClient from "@/mixins/httpClient";
 
-import Register from "@/components/login/Register";
+import Register from "@/components/Register";
 
 export default {
   components: {
