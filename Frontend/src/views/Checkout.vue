@@ -56,14 +56,27 @@
               <v-text-field
                 label="Luottokortti"
                 prepend-icon="mdi-credit-card"
+                v-model="creditcard"
+                ref="creditCardEl"
+                maxlength="19"
               />
+
               <div class="d-flex">
                 <v-text-field
                   label="Voimassaoloaika"
                   prepend-icon="mdi-calendar"
                   class="mr-10"
+                  v-model="expiration"
+                  ref="expirationEl"
+                  maxlength="5"
                 />
-                <v-text-field label="Turvakoodi" prepend-icon="mdi-lock" />
+                <v-text-field
+                  label="Turvakoodi"
+                  prepend-icon="mdi-lock"
+                  v-model="ccv"
+                  ref="ccvEl"
+                  maxlength="3"
+                />
               </div>
             </v-card-text>
             <v-card-actions class="px-5 pb-5">
@@ -89,6 +102,10 @@ export default {
   data: () => ({
     store: null,
     products: null,
+
+    creditcardArray: [],
+    expirationArray: [],
+    ccv: "",
   }),
 
   computed: {
@@ -97,6 +114,33 @@ export default {
         .reduce((acc, item) => acc + item.quantity * item.price, 0)
         .toFixed(2);
     },
+    creditcard: {
+      get: function() {
+        const formatedCard = this.creditcardArray;
+
+        for (let i = 4; i < formatedCard.length; i += 5) {
+          formatedCard.splice(i, 0, " ");
+        }
+
+        return formatedCard.join("");
+      },
+      set: function(val) {
+        this.creditcardArray = (val.match(/[0-9]/g) || []).slice(0, 16);
+      },
+    },
+
+    expiration: {
+      get: function() {
+        const formatedExp = this.expirationArray;
+        if (formatedExp.length > 2) formatedExp.splice(2, 0, "/");
+
+        return formatedExp.join("");
+      },
+      set: function(val) {
+        this.expirationArray = (val.match(/[0-9]/g) || []).slice(0, 4);
+      },
+    },
+
     ...mapState(["stores"]),
     ...mapState("auth", ["user"]),
     ...mapState("cart", ["cart"]),
@@ -124,13 +168,18 @@ export default {
         })
         .catch((err) => console.error(err));
     },
+
     setInfo(user = this.user) {
       this.store = this.stores.filter((store) => store.id == user.store)[0]?.id;
     },
+
     submitOrder() {
       this.http("api/order/", {
         method: "POST",
         body: JSON.stringify({
+          card: this.creditcard,
+          expiration: this.expiration,
+          ccv: this.ccv,
           products: this.products.map((product) => {
             return { product_id: product.id, quantity: product.quantity };
           }),
@@ -149,6 +198,7 @@ export default {
     ...mapActions(["getResource", "showMessage"]),
     ...mapActions("cart", ["emptyCart"]),
   },
+
   watch: {
     user: function(val) {
       this.setInfo(val);
@@ -157,12 +207,22 @@ export default {
       this.setInfo();
     },
   },
+
   created() {
     this.getResource({ resource: "stores", mutationName: "SET_STORES" });
     this.getProducts();
   },
+
   beforeMount() {
     this.setInfo();
+  },
+
+  mounted() {
+    Object.values(this.$refs).forEach((obj) => {
+      if (!obj.$attrs.maxlength) return;
+      const inputEl = obj.$el.querySelector("input");
+      inputEl.maxlength = obj.$attrs.maxlength;
+    });
   },
 };
 </script>
