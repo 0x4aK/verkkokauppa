@@ -128,11 +128,19 @@ export default {
   },
   methods: {
     submitStore() {
+      const open = this.$refs.timeTable.getTimeObj();
+
+      if (!open)
+        return this.showMessage({
+          message: "Tarkista avoinnaoloajat",
+          color: "error",
+        });
+
       this.http(`api/admin/stores/${this.selectedStore.id}`, {
         method: "PATCH",
         body: JSON.stringify({
           ...this.selectedStore,
-          open: this.$refs.timeTable.getTimeObj(),
+          open,
         }),
       })
         .then((resp) => {

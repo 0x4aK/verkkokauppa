@@ -74,35 +74,12 @@ export default {
         return;
       }
 
-      const weekdays = Object.keys(this.days);
-      if (!weekdays.includes(time.from)) {
-        this.showMessage({
-          message: `Tarkista päivät (${weekdays.join(", ")})`,
+      const error = this.validateTime(time);
+      if (error)
+        return this.showMessage({
+          message: error,
           color: "error",
         });
-        return;
-      }
-      const [fromTime, toTime] = [Number(time.fromTime), Number(time.toTime)];
-
-      if (
-        [fromTime, toTime].some((time) => {
-          return isNaN(time) || time < 6 || time > 24;
-        })
-      ) {
-        this.showMessage({
-          message: "Tarkista ajat (6 < aika < 24)",
-          color: "error",
-        });
-        return;
-      }
-
-      if (fromTime >= toTime) {
-        this.showMessage({
-          message: "Kiinnimenoajan tulee olla suurempi kuin Aukeamisaika",
-          color: "error",
-        });
-        return;
-      }
 
       this.openTimes.push({
         id: this.openTimes.length,
@@ -114,22 +91,41 @@ export default {
 
       [time.from, time.to, time.fromTime, time.toTime] = ["", "", "", ""];
     },
+
     delTime(id) {
       this.openTimes = this.openTimes.filter((time) => time.id !== id);
     },
-    getTimeObj() {
-      return this.openTimes
-        .filter((time) => time.id !== 0)
-        .reduce((acc, time) => {
-          if (![time.from, time.fromTime, time.toTime].every((item) => item))
-            return { ...acc };
 
-          const key = `${time.from}${time.to ? `-${time.to}` : ""}`;
-          return {
-            ...acc,
-            [key]: `${time.fromTime}-${time.toTime}`,
-          };
-        }, {});
+    validateTime(time) {
+      const weekdays = Object.keys(this.days);
+      if (!weekdays.includes(time.from))
+        return `Tarkista päivät (${weekdays.join(", ")})`;
+
+      const [fromTime, toTime] = [Number(time.fromTime), Number(time.toTime)];
+
+      if (
+        [fromTime, toTime].some((time) => {
+          return isNaN(time) || time < 6 || time > 24;
+        })
+      )
+        return "Tarkista ajat (6 < aika < 24)";
+
+      if (fromTime >= toTime)
+        return "Kiinnimenoajan tulee olla suurempi kuin aukeamisaika";
+    },
+
+    getTimeObj() {
+      const openTimes = this.openTimes.filter((time) => time.id !== 0);
+
+      if (openTimes.some(this.validateTime)) return false;
+
+      return openTimes.reduce((acc, time) => {
+        const key = `${time.from}${time.to ? `-${time.to}` : ""}`;
+        return {
+          ...acc,
+          [key]: `${time.fromTime}-${time.toTime}`,
+        };
+      }, {});
     },
     ...mapActions(["showMessage"]),
   },
