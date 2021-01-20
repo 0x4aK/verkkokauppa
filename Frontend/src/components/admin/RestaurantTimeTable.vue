@@ -69,7 +69,7 @@ export default {
 
   methods: {
     addTime(time) {
-      if (this.openTimes.length > 6) {
+      if (this.openTimes.length > 7) {
         this.showMessage({ message: "Aikoja voi olla vain 7", color: "error" });
         return;
       }
