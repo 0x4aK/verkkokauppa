@@ -1,12 +1,5 @@
 <?php
 
-/**  
- *  TODO: Create method that takes in array of product ids
- *  and return product info in array.
- *  Maybe use getProducts method (check if id_array in body)
- * 
-*/
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

@@ -27,7 +27,6 @@
 
             <v-expand-transition>
               <div v-if="selectedProduct">
-                <!-- TODO: https://vuetifyjs.com/en/components/file-inputs/#validation -->
                 <v-img height="230" :src="selectedProduct.img"></v-img>
 
                 <v-card-text>
@@ -109,7 +108,7 @@
                     src="/images/menu.jpg"
                     class="white--text align-center fill-height"
                   >
-                    <v-card-title class="product-name py-0 justify-center">
+                    <v-card-title class="py-0 justify-center">
                       <v-icon color="light-green accent-3" x-large>
                         mdi-plus
                       </v-icon>
@@ -130,7 +129,7 @@
                     :src="product.img"
                     class="white--text align-end fill-height"
                   >
-                    <v-card-title class="product-name py-0">
+                    <v-card-title class="py-0">
                       {{ product.name }}
                       <v-icon
                         class="featured-star"
@@ -194,6 +193,7 @@ export default {
           this.showMessage({ message: err.message, color: "error" });
         });
     },
+
     makeEmptyProduct() {
       this.selectedProduct = {
         id: 0,
@@ -205,7 +205,9 @@ export default {
         img: "",
       };
     },
+
     getProducts() {
+      this.selectedProduct = null;
       this.getResource({
         resource: "products",
         mutationName: "SET_PRODUCTS",

@@ -57,11 +57,14 @@ export default {
         method: "DELETE",
       })
         .then((resp) => {
-          this.dialog = false;
           this.showMessage({ message: resp.message, color: "success" });
           this.$emit("productDeleted");
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          this.showMessage({ message: err.message, color: "error" });
+        })
+        .finally(() => (this.dialog = false));
     },
     ...mapActions(["showMessage"]),
   },
