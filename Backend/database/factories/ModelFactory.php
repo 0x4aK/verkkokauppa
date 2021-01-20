@@ -46,6 +46,8 @@ $factory->define(App\Store::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Order::class, function (Faker\Generator $faker) {
     return [
+        'user_id' => 1,
+        'store_id' => 1,
         'status' => rand(1,4)
     ];
 });
