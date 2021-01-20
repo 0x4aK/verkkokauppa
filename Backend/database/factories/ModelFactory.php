@@ -40,6 +40,7 @@ $factory->define(App\Store::class, function (Faker\Generator $faker) {
         'address' => $faker->streetAddress(),
         'phone' => $faker->e164PhoneNumber(),
         'open' => ['ma-to' => '8-21', 'pe-la' => '10-23','su' => '12-21'],
+        'img' => '/images/restaurant.jpg',
     ];
 });
 

@@ -59,6 +59,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         $router->patch('products/{id}', 'ProductController@editProduct');
         $router->delete('products/{id}', 'ProductController@deleteProduct');
+
+        $router->patch('stores/{id}', 'StoreController@editStore');   // /api/admin/stores
+        $router->delete('stores/{id}', 'StoreController@deleteStore');
     });
 });
 

@@ -19,6 +19,7 @@ class CreateStoresTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->text('open');
+            $table->string('img');
         });
     }
 

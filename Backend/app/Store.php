@@ -8,6 +8,9 @@ class Store extends Model
 {
     public $timestamps = false; // disable timestamps
 
+    protected $attributes = [
+        'img' => '/images/default.jpg'
+    ];
 
     /**
      * make 'open' into JSON form

@@ -39,9 +39,9 @@ export default {
   components: { Store, Info, Orders },
   computed: {
     favoriteStore() {
-      return this.storesWithOpenHours.filter(
+      return this.storesWithOpenHours.find(
         (store) => store.id === this.user.store
-      )[0];
+      );
     },
     ...mapState("auth", ["user"]),
     ...mapGetters(["storesWithOpenHours"]),
