@@ -25,7 +25,9 @@ class LoginController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:8',
             'address' => 'required|string',
-            'phone' => 'required|string'
+            'phone' => 'required|string',
+            'store' => 'required|numeric',
+            'accepted' => 'required|accepted'
         ]);
 
         try {
@@ -36,12 +38,13 @@ class LoginController extends Controller
             $user->password = app('hash')->make($request->input('password'));
             $user->address = $request->input('address');
             $user->phone = $request->input('phone');
+            $user->store = (int)$request->input('store');
 
             $user->save();
 
-            return response()->json(['user' => $user, 'message' => 'User was created'], 201);
+            return response()->json(['data' => $user, 'message' => 'Käyttäjä luotu'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'User registration failed!'], 400);
+            return response()->json(['message' => 'Jotain meni vikaan käyttäjää tehdessä'], 400);
         }
     }
     
