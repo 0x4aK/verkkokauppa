@@ -50,17 +50,19 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     // Admin routes
     $router->group(['prefix' => 'admin', 'middleware' => ['auth', 'role:2']], function () use ($router) {
-        $router->get('users/all', 'UserController@getAllUsers');    // /api/admin/users/all
-        $router->get('users/{id}', 'UserController@getUserById');   // /api/admin/users/{id}
+        $router->get('users/all', 'UserController@getAllUsers');      // /api/admin/users/all
+        $router->get('users/{id}', 'UserController@getUserById');     // /api/admin/users/{id}
+        $router->delete('users/{id}', 'UserController@deleteUser');   // /api/admin/users/{id}
+        $router->post('users', 'LoginController@createUserAdmin');    // /api/admin/users/
 
-        $router->get('orders', 'OrderController@getOrders');         // /api/admin/orders
+        $router->get('orders', 'OrderController@getOrders');          // /api/admin/orders
         $router->delete('orders/{id}', 'OrderController@deleteOrder');
         $router->patch('orders/{id}', 'OrderController@editOrderStatusAdmin');
 
-        $router->patch('products/{id}', 'ProductController@editProduct');
+        $router->patch('products/{id}', 'ProductController@editProduct');   // /api/admin/products/{id}
         $router->delete('products/{id}', 'ProductController@deleteProduct');
 
-        $router->patch('stores/{id}', 'StoreController@editStore');   // /api/admin/stores
+        $router->patch('stores/{id}', 'StoreController@editStore');     // /api/admin/stores
         $router->delete('stores/{id}', 'StoreController@deleteStore');
     });
 });

@@ -13,7 +13,6 @@ class LoginController extends Controller
      * Register a new user.
      *
      * @param  Request  $request
-     * 
      * @return Response
      */
     public function register(Request $request)
@@ -30,19 +29,57 @@ class LoginController extends Controller
             'accepted' => 'required|accepted'
         ]);
 
+        $user = new User;
+        $user->fname = $request->input('fname');
+        $user->lname = $request->input('lname');
+        $user->email = $request->input('email');
+        $user->password = app('hash')->make($request->input('password'));
+        $user->address = $request->input('address');
+        $user->phone = $request->input('phone');
+        $user->store = (int)$request->input('store');
+        
         try {
-            $user = new User;
-            $user->fname = $request->input('fname');
-            $user->lname = $request->input('lname');
-            $user->email = $request->input('email');
-            $user->password = app('hash')->make($request->input('password'));
-            $user->address = $request->input('address');
-            $user->phone = $request->input('phone');
-            $user->store = (int)$request->input('store');
-
             $user->save();
-
             return response()->json(['data' => $user, 'message' => 'Käyttäjä luotu'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Jotain meni vikaan käyttäjää tehdessä'], 400);
+        }
+    }
+
+    /**
+     * Register a new Admin/Owner user.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function createUserAdmin(Request $request)
+    {
+        //validate incoming request 
+        $this->validate($request, [
+            'fname' => 'required|string',
+            'lname' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'address' => 'required|string',
+            'phone' => 'required|string',
+            'store' => 'required|numeric|min:1',
+            'role' => 'required|numeric|min:1|max:2'
+        ]);
+
+        $password = str_random(10);
+        
+        $user = new User;
+        $user->fname = $request->input('fname');
+        $user->lname = $request->input('lname');
+        $user->email = $request->input('email');
+        $user->password = app('hash')->make($password);
+        $user->address = $request->input('address');
+        $user->phone = $request->input('phone');
+        $user->store = (int)$request->input('store');
+        $user->role = (int)$request->input('role');
+
+        try {
+            $user->save();
+            return response()->json(['data' => array_merge($user->toArray(), ['password' => $password]), 'message' => 'Käyttäjä luotu'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Jotain meni vikaan käyttäjää tehdessä'], 400);
         }
@@ -52,7 +89,6 @@ class LoginController extends Controller
      * Get a JWT via given credentials.
      *
      * @param  Request  $request
-     * 
      * @return Response
      */
     public function login(Request $request)
@@ -74,13 +110,12 @@ class LoginController extends Controller
 
     /**
      * Logout authenticated user
-     * 
      * @return Response
      */
     public function logout()
     {
         Auth::logout(true);
 
-        return response()->json(['token' => '', 'message' => 'User logout'], 200);
+        return response()->json(['message' => 'Kirjauduit ulos'], 200);;
     }
 }
