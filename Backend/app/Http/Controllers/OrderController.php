@@ -55,6 +55,7 @@ class OrderController extends Controller
     /**
      * Get order by id and return with products ordered
      * 
+     * @param  int      $id
      * @return Response
      */
     public function getOrderById($id) {
@@ -71,7 +72,7 @@ class OrderController extends Controller
      * Gets order and edits the status of it
      * 
      * @param  Request  $request
-     * 
+     * @param  int      $id
      * @return Response
      */
     public function editOrderStatus(Request $request, $id) {
@@ -99,6 +100,7 @@ class OrderController extends Controller
      * Admin version
      * 
      * @param  Request  $request
+     * @param  int      $id
      * @return Response
      */
     public function editOrderStatusAdmin(Request $request, $id) {

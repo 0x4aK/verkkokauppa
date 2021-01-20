@@ -30,6 +30,33 @@ class UserController extends Controller
     }
 
     /**
+     * Get all User.
+     *
+     * @return Response
+     */
+    public function getAllUsers()
+    {
+        return response()->json(['data' =>  User::all()], 200);
+    }
+
+    /**
+     * Get one user.
+     *
+     * @param  int      $id
+     * @return Response
+     */
+    public function getUserById($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Käyttäjää ei löydetty'], 404);
+        }
+
+        return response()->json(['data' => $user], 200);
+    }
+
+    /**
      * Edits currently authenticated user.
      *
      * @param  Request  $request
@@ -98,32 +125,6 @@ class UserController extends Controller
     }
 
     /**
-     * Get all User.
-     *
-     * @return Response
-     */
-    public function getAllUsers()
-    {
-        return response()->json(['data' =>  User::all()], 200);
-    }
-
-    /**
-     * Get one user.
-     *
-     * @return Response
-     */
-    public function getUserById($id)
-    {
-        try {
-            $user = User::findOrFail($id);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'User not found!'], 404);
-        }
-
-        return response()->json(['user' => $user], 200);
-    }
-
-    /**
      * Deletes the current authenticated user from database.
      *
      * @param  Request  $request
@@ -137,6 +138,24 @@ class UserController extends Controller
             return response()->json(["message" => "Validator error!" , "errors" => ['old_password' => 'Wrong password']], 400);
         }
 
+        $user->delete();
+        return response()->json(['message' => "Käyttäjätili poistettu!"], 200);
+    }
+
+    /**
+     * Deletes the current authenticated user from database.
+     *
+     * @param  Request  $request
+     * @param  int      $id
+     * @return Response
+     */
+    public function deleteUser(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Käyttäjää ei löydetty!'], 404);
+        }
         $user->delete();
         return response()->json(['message' => "Käyttäjätili poistettu!"], 200);
     }
