@@ -21,7 +21,7 @@ export default {
         fetchParams
       );
 
-      const res = await fetch(`http://192.168.1.64:8000/${url}`, fetchParams); //TODO: replace url in production
+      const res = await fetch(url, fetchParams); //TODO: replace url in production
       if (res.status === 403) {
         this.logout();
         if (this.$route.name === "Login") return false;

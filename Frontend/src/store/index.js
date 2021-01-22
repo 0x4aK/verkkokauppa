@@ -69,7 +69,7 @@ const actions = {
 
     console.debug(`Getting ${resource}`);
 
-    const resp = await fetch(`http://192.168.1.64:8000/api/${resource}/`); //TODO: replace url in production
+    const resp = await fetch(`api/${resource}`);
     if (!resp.ok) throw Error("Error while fetching products");
 
     const data = await resp.json();

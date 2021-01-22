@@ -26,7 +26,7 @@ const actions = {
   async getUserInfo({ dispatch, commit, getters, state }) {
     if (!getters.isLoggedIn) return;
 
-    const res = await fetch("http://192.168.1.64:8000/api/profile", {
+    const res = await fetch("api/profile", {
       headers: { Authorization: `Bearer ${state.access_token}` },
     });
 

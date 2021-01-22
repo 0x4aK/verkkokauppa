@@ -72,11 +72,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 });
 
-// TODO: remove in production, here for CORS
-$router->options('/{route:.*}', function () {
-    return response(['status' => 'success']);;
-});
-
 $router->get('/{route:.*}', function () use ($router) {
     return view("vue-app"); // no route found, catch all and return Vue app
 });
