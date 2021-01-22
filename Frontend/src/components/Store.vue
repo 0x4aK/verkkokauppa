@@ -1,6 +1,6 @@
 <template>
   <v-card class="fill-height" elevation="3">
-    <v-img :src="store.img" />
+    <v-img height="250" :src="store.img" />
     <v-card-title>{{ store.name }}</v-card-title>
 
     <v-card-text>
