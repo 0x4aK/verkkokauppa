@@ -27,7 +27,7 @@
 
             <v-expand-transition>
               <div v-if="selectedProduct">
-                <v-img height="230" :src="selectedProduct.img"></v-img>
+                <ImageSelector height="230" v-model="selectedProduct.img" />
 
                 <v-card-text>
                   <v-text-field label="Nimi" v-model="selectedProduct.name" />
@@ -154,13 +154,14 @@
 import httpClient from "@/mixins/httpClient";
 
 import DeleteProductBtn from "@/components/admin/DeleteProductBtn";
+import ImageSelector from "@/components/ImageSelector";
 
 import { mapActions, mapState } from "vuex";
 
 export default {
   mixins: [httpClient],
 
-  components: { DeleteProductBtn },
+  components: { DeleteProductBtn, ImageSelector },
 
   data: () => ({
     selectedProduct: null,

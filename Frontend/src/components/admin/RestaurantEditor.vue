@@ -29,11 +29,8 @@
           <v-form @submit.prevent="submitStore">
             <v-expand-transition>
               <div v-if="selectedStore">
-                <v-img
-                  height="200"
-                  :src="selectedStore.img"
-                  class="rounded-t-lg"
-                />
+                <ImageSelector height="200" v-model="selectedStore.img" />
+
                 <div class="pa-2">
                   <v-text-field label="Nimi" v-model="selectedStore.name" />
                   <v-text-field
@@ -107,13 +104,14 @@ import httpClient from "@/mixins/httpClient";
 
 import DeleteRestaurantBtn from "./DeleteRestaurantBtn";
 import RestaurantTimeTable from "./RestaurantTimeTable";
+import ImageSelector from "@/components/ImageSelector";
 
 import { mapActions, mapState } from "vuex";
 
 export default {
   mixins: [httpClient],
 
-  components: { DeleteRestaurantBtn, RestaurantTimeTable },
+  components: { DeleteRestaurantBtn, RestaurantTimeTable, ImageSelector },
 
   data: () => ({
     selectedStore: null,
@@ -151,6 +149,9 @@ export default {
           console.error(err);
           this.showMessage({ message: err.message, color: "error" });
         });
+    },
+    setImage(img) {
+      this.selectedStore.img = img;
     },
 
     makeEmptyStore() {
