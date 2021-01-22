@@ -207,7 +207,7 @@ export default {
           this.showMessage({ message: resp.message, color: "success" });
           this.getFiles(this.selected || "root");
         })
-        .catch((err) => console.error(err));
+        .catch((err) => this.showMessage({ message: err, color: "error" }));
     },
 
     getFolders() {
