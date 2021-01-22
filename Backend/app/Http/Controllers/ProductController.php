@@ -106,6 +106,8 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->category = (int)$request->input('category');
 
+        if ($request->filled('img')) $product->img = $request->input('img');
+
         if (!$id) $product->save();
         else $product->update();
 

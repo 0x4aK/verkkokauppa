@@ -58,6 +58,8 @@ class StoreController extends Controller
         $store->phone = $request->input('phone');
         $store->open = $request->input('open');
 
+        if ($request->filled('img')) $store->img = $request->input('img');
+
         if (!$id) $store->save();
         else $store->update();
 
