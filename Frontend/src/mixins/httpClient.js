@@ -3,14 +3,12 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   methods: {
     async http(url, params = {}) {
-      const fetchParams = Object.assign({}, params, {
-        headers: Object.assign(
-          {
-            "Content-Type": "application/json",
-          },
-          params.headers
-        ),
-      });
+      const headers = params.headers || { "Content-Type": "application/json" };
+
+      const fetchParams = {
+        headers,
+        ...params,
+      };
 
       if (this.isLoggedIn) {
         fetchParams.headers["Authorization"] = `Bearer ${this.access_token}`;
@@ -26,16 +24,18 @@ export default {
       const res = await fetch(`http://192.168.1.64:8000/${url}`, fetchParams); //TODO: replace url in production
       if (res.status === 403) {
         this.logout();
-        this.$router.push({
-          name: "Login",
-        });
+        if (this.$route.name === "Login") return false;
+        this.$router.push({ name: "Login" });
       }
 
-      const json = await res.json();
-
-      console.debug("JSON resp:", json);
-
+      let json;
+      try {
+        json = await res.json();
+      } catch (err) {
+        throw Error(res.statusText);
+      }
       if (!res.ok) throw Error(json.message);
+      console.debug("JSON resp:", json);
       return json;
     },
     ...mapActions("auth", ["logout"]),
