@@ -25,11 +25,4 @@ $app = require __DIR__.'/../bootstrap/app.php';
 |
 */
 
-//TODO: remove in production
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS, PATCH');
-header('Access-Control-Max-Age: 86400');
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
-
 $app->run();
