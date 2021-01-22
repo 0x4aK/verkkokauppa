@@ -21,7 +21,7 @@ export default {
         fetchParams
       );
 
-      const res = await fetch(url, fetchParams); //TODO: replace url in production
+      const res = await fetch(url, fetchParams);
       if (res.status === 403) {
         this.logout();
         if (this.$route.name === "Login") return false;
