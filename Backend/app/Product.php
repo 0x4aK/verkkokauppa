@@ -9,7 +9,7 @@ class Product extends Model
     public $timestamps = false; // disable timestamps, not needed in this case
 
     protected $attributes = [
-        'img' => '/images/default.jpg'
+        'img' => 'images/default.jpg'
     ];
 
     protected $casts = [

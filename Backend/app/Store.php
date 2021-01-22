@@ -9,7 +9,7 @@ class Store extends Model
     public $timestamps = false; // disable timestamps
 
     protected $attributes = [
-        'img' => '/images/default.jpg'
+        'img' => 'images/default.jpg'
     ];
 
     /**

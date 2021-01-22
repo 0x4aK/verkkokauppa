@@ -53,7 +53,7 @@ class ImageController extends Controller
     private function createFileArray(string $folder, array $inArray)
     {
         return array_map(function($in) use ($folder) {
-            return "/images/$folder$in";
+            return "images/$folder$in";
         }, $inArray);
     }
     
@@ -123,7 +123,10 @@ class ImageController extends Controller
     {
         $this->validate($request, ['path' => 'string']);
 
-        if (!unlink(substr($request->input('path'), 1)))
+        if (in_array($request->input('path'), ['images/job.jpg', 'images/restaurant.jpg', 'images/menu.jpg', 'images/default.jpg']))
+            return response()->json(['message' => 'Et voi poistaa tätä kuvaa'], 401);
+
+        if (!unlink($request->input('path')))
             return response()->json(['message' => 'Jotain meni vikaan kuvaa poistaessa'], 500);
 
         return response()->json(['message' => 'Kuva poistettu'], 200);

@@ -64,7 +64,7 @@
               <v-col cols="6">
                 <v-card height="164" @click="makeEmptyStore">
                   <v-img
-                    src="/images/restaurant.jpg"
+                    src="images/restaurant.jpg"
                     class="white--text align-center fill-height"
                   >
                     <v-card-title
