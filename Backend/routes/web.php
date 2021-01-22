@@ -64,6 +64,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         $router->patch('stores/{id}', 'StoreController@editStore');     // /api/admin/stores
         $router->delete('stores/{id}', 'StoreController@deleteStore');
+
+        $router->get('images/folders', 'ImageController@getFolders');
+        $router->get('images/{folder}', 'ImageController@getFiles');
+        $router->post('images/{folder}', 'ImageController@handleFileUpload');
+        $router->delete('images', 'ImageController@handleFileDelete');
     });
 });
 
