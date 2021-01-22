@@ -174,7 +174,7 @@ export default {
     },
 
     submitOrder() {
-      this.http("api/order/", {
+      this.http("api/order", {
         method: "POST",
         body: JSON.stringify({
           card: this.creditcard,

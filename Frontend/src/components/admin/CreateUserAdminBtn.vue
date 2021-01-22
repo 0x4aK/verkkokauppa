@@ -149,7 +149,7 @@ export default {
 
   methods: {
     submit() {
-      this.http("api/admin/users/", {
+      this.http("api/admin/users", {
         method: "POST",
         body: JSON.stringify(this.user),
       })

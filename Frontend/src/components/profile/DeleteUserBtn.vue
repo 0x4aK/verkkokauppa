@@ -73,7 +73,7 @@ export default {
 
   methods: {
     submit() {
-      this.http("api/profile/", {
+      this.http("api/profile", {
         method: "DELETE",
         body: JSON.stringify({
           password: this.password,
